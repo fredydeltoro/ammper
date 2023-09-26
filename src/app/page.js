@@ -1,4 +1,5 @@
 import styles from "./page.module.css";
+import Table from "@/components/Table";
 
 export default function Home() {
   return (
@@ -11,6 +12,14 @@ export default function Home() {
           />
         </h1>
       </header>
+
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <Table />
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

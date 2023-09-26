@@ -11,6 +11,7 @@
   "dependencies": {
     "bootstrap": "^5.3.2",
     "next": "latest",
+    "next-base64": "^1.1.0",
     "react": "latest",
     "react-dom": "latest"
   },
