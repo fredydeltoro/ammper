@@ -40,17 +40,28 @@ export default async function Table() {
             <th scope="col">Date</th>
             <th scope="col">Concept</th>
             <th scope="col">Caregory</th>
-            <th scope="col">Outflow</th>
             <th scope="col">Inflow</th>
+            <th scope="col">Outflow</th>
+            <th scope="col">Status</th>
           </tr>
         </thead>
         <tbody>
-          {transactions.results?.map(() => (
+          {transactions.results?.map((row) => (
             <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+              <td>{row.value_date}</td>
+              <td>
+                <a href={row.merchant.website}>{row.merchant.name}</a>
+                <br />
+                <span>{row.description}</span>
+              </td>
+              <td>{row.category}</td>
+              <td>
+                {row.type === "INFLOW" ? `${row.amount} ${row.currency}` : ""}
+              </td>
+              <td>
+                {row.type === "OUTFLOW" ? `${row.amount} ${row.currency}` : ""}
+              </td>
+              <td>{row.status}</td>
             </tr>
           ))}
         </tbody>
