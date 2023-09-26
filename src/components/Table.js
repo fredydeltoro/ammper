@@ -47,7 +47,7 @@ export default async function Table() {
         </thead>
         <tbody>
           {transactions.results?.map((row) => (
-            <tr>
+            <tr key={row.id}>
               <td>{row.value_date}</td>
               <td>
                 <a href={row.merchant.website}>{row.merchant.name}</a>
