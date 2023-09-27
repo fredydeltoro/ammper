@@ -73,7 +73,9 @@ export default function Table() {
                 <tr key={row.id}>
                   <td>{row.value_date}</td>
                   <td>
-                    <a href={row.merchant.website}>{row.merchant.name}</a>
+                    <a target="blank" href={row.merchant.website}>
+                      {row.merchant.name}
+                    </a>
                     <br />
                     <span>{row.description}</span>
                   </td>
