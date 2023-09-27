@@ -1,36 +1,45 @@
-import React from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import base64 from "next-base64";
+import Paginator from "./Paginator";
 
-async function getTransactions() {
-  let myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    `Basic ${base64.encode(
-      process.env["BELVO_SECRET_ID"] + ":" + process.env["BELVO_SECRET_PSW"]
-    )}`
-  );
-
-  var requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-  };
-
-  try {
-    const response = await fetch(
-      `https://sandbox.belvo.com/api/transactions/?page=1&link=${process.env["BELVO_ID"]}`,
-      requestOptions
+export default function Table() {
+  const [transactions, setTransactions] = useState({ results: [] });
+  const [currentPage, setPage] = useState(1);
+  const getTransactions = async (page = 1) => {
+    console.log("=====>", page);
+    let myHeaders = new Headers();
+    myHeaders.append(
+      "Authorization",
+      `Basic ${base64.encode(
+        process.env["NEXT_PUBLIC_BELVO_SECRET_ID"] +
+          ":" +
+          process.env["NEXT_PUBLIC_BELVO_SECRET_PSW"]
+      )}`
     );
 
-    const data = await response.json();
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+    };
 
-    return data;
-  } catch (error) {
-    return { error };
-  }
-}
+    try {
+      const response = await fetch(
+        `https://sandbox.belvo.com/api/transactions/?page_size=10&page=${page}&link=${process.env["NEXT_PUBLIC_BELVO_ID"]}&account=${process.env["NEXT_PUBLIC_BELVO_CURRENT_ACCOUNT"]}`,
+        requestOptions
+      );
 
-export default async function Table() {
-  const transactions = await getTransactions();
+      const data = await response.json();
+      setTransactions(data);
+    } catch (error) {
+      setTransactions({ error });
+    }
+  };
+
+  useEffect(() => {
+    getTransactions(currentPage);
+  }, []);
 
   return (
     <div>
@@ -66,6 +75,13 @@ export default async function Table() {
           ))}
         </tbody>
       </table>
+      <Paginator
+        count={transactions.count}
+        pageSize={10}
+        currentPage={currentPage}
+        fetchData={getTransactions}
+        setPage={setPage}
+      />
     </div>
   );
 }
