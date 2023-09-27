@@ -16,7 +16,9 @@ export default function Home() {
       <div className={`container ${styles.content}`}>
         <div className="row">
           <div className="col-12">
+            <h3>Transactions</h3>
             <Table />
+            <a href="/transactions">See Full</a>
           </div>
         </div>
       </div>

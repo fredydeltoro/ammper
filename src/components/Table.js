@@ -5,7 +5,7 @@ import base64 from "next-base64";
 import styles from "@/app/page.module.css";
 import Paginator from "./Paginator";
 
-export default function Table() {
+export default function Table({ limit = 5, pagination = false }) {
   const [transactions, setTransactions] = useState({});
   const [currentPage, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -28,8 +28,10 @@ export default function Table() {
     setLoading(true);
 
     try {
+      const id = process.env["NEXT_PUBLIC_BELVO_ID"];
+      const account = process.env["NEXT_PUBLIC_BELVO_CURRENT_ACCOUNT"];
       const response = await fetch(
-        `https://sandbox.belvo.com/api/transactions/?page_size=10&page=${page}&link=${process.env["NEXT_PUBLIC_BELVO_ID"]}&account=${process.env["NEXT_PUBLIC_BELVO_CURRENT_ACCOUNT"]}`,
+        `https://sandbox.belvo.com/api/transactions/?page_size=${limit}&page=${page}&link=${id}&account=${account}`,
         requestOptions
       );
 
@@ -95,13 +97,15 @@ export default function Table() {
               ))}
             </tbody>
           </table>
-          <Paginator
-            count={transactions.count}
-            pageSize={10}
-            currentPage={currentPage}
-            fetchData={getTransactions}
-            setPage={setPage}
-          />
+          {pagination && (
+            <Paginator
+              count={transactions.count}
+              pageSize={limit}
+              currentPage={currentPage}
+              fetchData={getTransactions}
+              setPage={setPage}
+            />
+          )}
         </>
       )}
     </>
