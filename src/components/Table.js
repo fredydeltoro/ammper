@@ -97,16 +97,17 @@ export default function Table({ limit = 5, pagination = false }) {
               ))}
             </tbody>
           </table>
-          {pagination && (
-            <Paginator
-              count={transactions.count}
-              pageSize={limit}
-              currentPage={currentPage}
-              fetchData={getTransactions}
-              setPage={setPage}
-            />
-          )}
         </>
+      )}
+      {pagination && (
+        <Paginator
+          className={`${loading && "visually-hidden"}`}
+          count={transactions.count}
+          pageSize={limit}
+          currentPage={currentPage}
+          fetchData={getTransactions}
+          setPage={setPage}
+        />
       )}
     </>
   );
