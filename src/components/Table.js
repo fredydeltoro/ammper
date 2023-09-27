@@ -8,7 +8,6 @@ export default function Table() {
   const [transactions, setTransactions] = useState({ results: [] });
   const [currentPage, setPage] = useState(1);
   const getTransactions = async (page = 1) => {
-    console.log("=====>", page);
     let myHeaders = new Headers();
     myHeaders.append(
       "Authorization",

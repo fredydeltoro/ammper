@@ -20,8 +20,11 @@ export default function Paginator({
   return (
     <nav aria-label="...">
       <ul className="pagination">
-        {pages.map((page) => (
-          <li className={`page-item ${page === currentPage ? "active" : ""}`}>
+        {pages.map((page, index) => (
+          <li
+            key={index}
+            className={`page-item ${page === currentPage ? "active" : ""}`}
+          >
             <a
               className="page-link"
               href="#"
