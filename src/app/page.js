@@ -13,7 +13,7 @@ export default function Home() {
         </h1>
       </header>
 
-      <div className="container">
+      <div className={`container ${styles.content}`}>
         <div className="row">
           <div className="col-12">
             <Table />
